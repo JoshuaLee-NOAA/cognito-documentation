@@ -134,6 +134,17 @@ Access `/dashboard` (after authentication) to view:
 - Token metadata (issuer, expiration, etc.)
 - Copy-to-clipboard functionality for analysis
 
+## Diagnostic Tools
+
+Access `/test` (no authentication required) to:
+- View all configuration parameters
+- Test individual Cognito endpoints
+- Generate and copy the exact OAuth URL
+- Run server-side diagnostics
+- Verify connectivity and configuration
+
+**Use these tools when troubleshooting authentication issues!**
+
 ## Security
 
 ⚠️ **Critical Security Reminders:**
