@@ -5,8 +5,15 @@
  * including session management and token extraction.
  */
 
+import NextAuth from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import type { Session } from "next-auth"
+
+/**
+ * Export the NextAuth instance for server-side session access
+ * This is used in Server Components and API Routes
+ */
+export const { auth, handlers } = NextAuth(authOptions)
 
 /**
  * Export the auth configuration for use in other parts of the app
