@@ -7,8 +7,8 @@
 import Link from "next/link";
 
 export default function Home() {
-  const isAuthenticated = false; // TODO: Get from session
-  const user: { name?: string; email?: string } | null = null; // TODO: Get from session
+  const isAuthenticated = false // TODO: Get from session
+  const user: { name?: string; email?: string } | null = null // TODO: Get from session
 
   return (
     <div className="h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%)' }}>
@@ -67,8 +67,8 @@ export default function Home() {
               <h2 className="text-xl font-semibold mb-4 text-center">Welcome back!</h2>
               <div className="mb-6 p-4 rounded-lg bg-green-50 border-l-4 border-green-500">
                 <p className="text-sm mb-1">✅ <strong>Signed in as:</strong></p>
-                <p className="font-medium">{user?.name || user?.email || 'User'}</p>
-                {user?.email && <p className="text-sm text-gray-600">{user.email}</p>}
+                <p className="font-medium">{(user as any)?.name || (user as any)?.email || 'User'}</p>
+                {(user as any)?.email && <p className="text-sm text-gray-600">{(user as any).email}</p>}
               </div>
 
               <div className="space-y-3">

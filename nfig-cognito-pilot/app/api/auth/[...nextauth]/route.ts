@@ -144,6 +144,6 @@ export const authOptions: NextAuthConfig = {
  * NextAuth handler for App Router
  * Handles GET and POST requests to /api/auth/*
  */
-const handler = NextAuth(authOptions)
+const { auth, handlers: { GET, POST } } = NextAuth(authOptions)
 
-export { handler as GET, handler as POST }
+export { GET, POST, auth }
