@@ -14,52 +14,88 @@ export default function Home() {
     <div className="h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%)' }}>
       <div className="w-full max-w-md px-6">
         {!isAuthenticated ? (
-          <div className="mat-card mat-elevation-8 p-8 bg-white rounded-lg">
-            <div className="text-center mb-6">
+          <div className="mat-card mat-elevation-8 bg-white rounded-lg overflow-hidden">
+            {/* Card Header with branding */}
+            <div className="px-8 pt-6 pb-4 border-b border-gray-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--noaa-primary)' }}>
+                  N
+                </div>
+                <div>
+                  <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
+                  <p className="text-xs text-gray-500">Test Environment</p>
+                </div>
+              </div>
+              {/* Status indicator */}
+              <div className="flex items-center gap-2 text-xs">
+                <div className="w-2 h-2 rounded-full bg-gray-400"></div>
+                <span className="text-gray-600">Not Authenticated</span>
+              </div>
+            </div>
+
+            {/* Card Body */}
+            <div className="p-8 text-center">
               <div className="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--noaa-primary)' }}>
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-semibold mb-2 text-gray-900">NFIG Cognito Pilot</h1>
-              <p className="text-sm text-gray-600">Sign in to continue</p>
+              <h2 className="text-xl font-semibold mb-2 text-gray-900">Sign in to continue</h2>
+              <p className="text-sm text-gray-600 mb-6">Authenticate with NOAA credentials via Cognito</p>
+
+              <a
+                href="/api/auth/signin"
+                className="mat-button mat-button-raised mat-elevation-4 flex items-center justify-center text-white font-semibold py-3 px-6 rounded-lg transition-all hover:mat-elevation-8"
+                style={{ backgroundColor: 'var(--noaa-primary)' }}
+              >
+                Sign In with Cognito
+              </a>
             </div>
-
-            <a
-              href="/api/auth/signin"
-              className="mat-button mat-button-raised mat-elevation-4 flex items-center justify-center text-white font-semibold py-3 px-6 rounded-lg transition-all hover:mat-elevation-8"
-              style={{ backgroundColor: 'var(--noaa-primary)' }}
-            >
-              Sign In with Cognito
-            </a>
-
-            <p className="mt-4 text-xs text-center text-gray-500">
-              NOAA Authentication Test Environment
-            </p>
           </div>
         ) : (
-          <div className="mat-card mat-elevation-8 p-8 bg-white rounded-lg">
-            <h2 className="text-xl font-semibold mb-4 text-center">Welcome back!</h2>
-            <div className="mb-6 p-4 rounded-lg bg-green-50 border-l-4 border-green-500">
-              <p className="text-sm mb-1">✅ <strong>Authenticated</strong></p>
-              <p className="font-medium">{user?.name || user?.email || 'User'}</p>
-              {user?.email && <p className="text-sm text-gray-600">{user.email}</p>}
+          <div className="mat-card mat-elevation-8 bg-white rounded-lg overflow-hidden">
+            {/* Card Header with branding */}
+            <div className="px-8 pt-6 pb-4 border-b border-gray-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--noaa-primary)' }}>
+                  N
+                </div>
+                <div>
+                  <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
+                  <p className="text-xs text-gray-500">Test Environment</p>
+                </div>
+              </div>
+              {/* Status indicator */}
+              <div className="flex items-center gap-2 text-xs">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-gray-600">Authenticated</span>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <Link
-                href="/dashboard"
-                className="mat-button mat-button-raised block text-center text-white font-semibold py-3 px-6 rounded-lg"
-                style={{ backgroundColor: 'var(--noaa-secondary)' }}
-              >
-                View Debug Dashboard
-              </Link>
-              <a
-                href="/api/auth/signout"
-                className="mat-button block text-center bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200"
-              >
-                Sign Out
-              </a>
+            {/* Card Body */}
+            <div className="p-8">
+              <h2 className="text-xl font-semibold mb-4 text-center">Welcome back!</h2>
+              <div className="mb-6 p-4 rounded-lg bg-green-50 border-l-4 border-green-500">
+                <p className="text-sm mb-1">✅ <strong>Signed in as:</strong></p>
+                <p className="font-medium">{user?.name || user?.email || 'User'}</p>
+                {user?.email && <p className="text-sm text-gray-600">{user.email}</p>}
+              </div>
+
+              <div className="space-y-3">
+                <Link
+                  href="/dashboard"
+                  className="mat-button mat-button-raised block text-center text-white font-semibold py-3 px-6 rounded-lg"
+                  style={{ backgroundColor: 'var(--noaa-secondary)' }}
+                >
+                  View Debug Dashboard
+                </Link>
+                <a
+                  href="/api/auth/signout"
+                  className="mat-button block text-center bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200"
+                >
+                  Sign Out
+                </a>
+              </div>
             </div>
           </div>
         )}
