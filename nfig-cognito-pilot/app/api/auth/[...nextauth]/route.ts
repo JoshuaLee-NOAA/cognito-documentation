@@ -72,6 +72,9 @@ export const authOptions: NextAuthConfig = {
     async jwt({ token, account, profile }) {
       // On initial sign-in, account and profile will be available
       if (account) {
+        console.log("[DEBUG] JWT Callback - Account:", JSON.stringify(account, null, 2))
+        console.log("[DEBUG] JWT Callback - Profile:", JSON.stringify(profile, null, 2))
+        
         // Store Cognito tokens in the JWT
         token.access_token = account.access_token
         token.id_token = account.id_token

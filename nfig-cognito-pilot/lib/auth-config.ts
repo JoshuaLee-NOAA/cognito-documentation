@@ -65,8 +65,10 @@ export const SUPPORTED_RESPONSE_TYPES = ["code", "token"];
 
 /**
  * Supported OIDC scopes
+ * NOTE: Only request scopes that are enabled in your Cognito App Client
+ * Start with just "openid" - add others as needed
  */
-export const SUPPORTED_SCOPES = ["openid", "email", "phone", "profile"];
+export const SUPPORTED_SCOPES = ["openid"];
 
 /**
  * ID Token signing algorithm
