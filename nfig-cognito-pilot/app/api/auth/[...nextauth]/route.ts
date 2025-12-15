@@ -113,19 +113,6 @@ export const authOptions: NextAuthConfig = {
   },
   
   /**
-   * Pages Configuration
-   * Customize the default NextAuth pages
-   */
-  pages: {
-    // Redirect to home page for sign in (we'll handle it there)
-    signIn: "/",
-    // Redirect to home page on sign out
-    signOut: "/",
-    // Custom error page (optional - for now use default)
-    // error: "/auth/error",
-  },
-  
-  /**
    * Session Strategy
    * Use JWT for stateless, serverless-compatible sessions
    * FR-4.3: JWT-based session management for load testing
