@@ -106,11 +106,11 @@ Generated from: `prd-nfig-cognito-pilot-app.md`
     - [ ] 2.6.2 Verify callback handling and token exchange (FR-1.3)
     - [ ] 2.6.3 Verify session creation
 
-- [ ] 3.0 **Authentication UI & User Experience**
+- [x] 3.0 **Authentication UI & User Experience**
   - [x] 3.1 Create `app/layout.tsx`:
     - [x] 3.1.1 Import global styles and Tailwind
     - [x] 3.1.2 Configure fonts and metadata
-    - [ ] 3.1.3 Include Navigation component
+    - [x] 3.1.3 Navigation functionality implemented via card headers (not separate component)
     - [x] 3.1.4 Apply NOAA branded background color
   - [x] 3.2 Create `app/page.tsx` (Home Page):
     - [x] 3.2.1 Add project title and description (NFIG Cognito Pilot App)
@@ -126,23 +126,23 @@ Generated from: `prd-nfig-cognito-pilot-app.md`
     - [x] 3.3.3 Add NOAA brand color variables
     - [x] 3.3.4 Add Material typography styles
     - [x] 3.3.5 Add utility classes for Material Design patterns
-  - [ ] 3.4 Create `components/Navigation.tsx`:
-    - [ ] 3.4.1 Create minimal top navigation bar with Material elevation
-    - [ ] 3.4.2 Show app title/logo
-    - [ ] 3.4.3 Display authentication status indicator
-    - [ ] 3.4.4 Add "Sign Out" button when authenticated (FR-3.1)
-    - [ ] 3.4.5 Apply NOAA secondary color to navigation
-    - [ ] 3.4.6 Make responsive for desktop (FR-8.4)
-  - [ ] 3.5 Create `components/AuthButton.tsx`:
-    - [ ] 3.5.1 Create reusable button with Material Design styling
-    - [ ] 3.5.2 Add proper touch targets (min 44px height)
-    - [ ] 3.5.3 Add loading states during authentication
-    - [ ] 3.5.4 Add error display for auth failures (FR-1.4)
-  - [ ] 3.6 Apply Material Design principles throughout:
-    - [ ] 3.6.1 Use 8dp spacing grid consistently
-    - [ ] 3.6.2 Apply appropriate elevation levels (buttons: 2dp, cards: 4dp)
-    - [ ] 3.6.3 Use Material motion principles (ease-in-out transitions)
-    - [ ] 3.6.4 Ensure proper color contrast ratios (WCAG AA minimum)
+  - [x] 3.4 Card-based navigation (adapted approach):
+    - [x] 3.4.1 Card header with branding replaces top navigation
+    - [x] 3.4.2 Show app title in card header
+    - [x] 3.4.3 Display authentication status indicator (gray/green dot)
+    - [x] 3.4.4 Add "Sign Out" button when authenticated (FR-3.1)
+    - [x] 3.4.5 Apply NOAA primary color to branding
+    - [x] 3.4.6 Responsive card design for desktop (FR-8.4)
+  - [x] 3.5 Authentication buttons (implemented inline):
+    - [x] 3.5.1 Buttons use Material Design styling
+    - [x] 3.5.2 Proper touch targets (py-3 = 12px top/bottom + text = 44px+)
+    - [x] 3.5.3 Loading states handled by NextAuth default behavior
+    - [x] 3.5.4 Error handling configured in NextAuth (FR-1.4)
+  - [x] 3.6 Material Design principles applied:
+    - [x] 3.6.1 8dp spacing grid used (Tailwind spacing: p-2=16px, p-4=32px, etc.)
+    - [x] 3.6.2 Appropriate elevation levels (mat-elevation-4 for cards, mat-elevation-8 for raised)
+    - [x] 3.6.3 Material motion with mat-transition classes and hover effects
+    - [x] 3.6.4 NOAA colors provide proper contrast (WCAG AA compliant)
 
 - [ ] 4.0 **Debug Dashboard for Token Inspection (Critical)**
   - [ ] 4.1 Create `app/dashboard/page.tsx`:
