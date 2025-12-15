@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div className="h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%)' }}>
-      <div className="w-full max-w-md px-6">
+      <div className="w-full max-w-lg px-6">
         {!isAuthenticated ? (
           <div className="mat-card mat-elevation-8 bg-white rounded-lg overflow-hidden">
             {/* Card Header with branding */}
