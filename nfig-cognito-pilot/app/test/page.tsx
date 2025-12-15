@@ -14,6 +14,7 @@ import {
   COGNITO_JWKS_URI,
   SUPPORTED_SCOPES,
 } from "@/lib/auth-config";
+import { CopyUrlButton } from "@/components/CopyUrlButton";
 
 export default function TestPage() {
   // Build the OAuth URL with current configuration
@@ -109,12 +110,7 @@ export default function TestPage() {
           </div>
 
           <div className="flex gap-3">
-            <button
-              onClick={() => navigator.clipboard.writeText(oauthUrl)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            >
-              📋 Copy URL
-            </button>
+            <CopyUrlButton url={oauthUrl} />
             <a
               href={oauthUrl}
               target="_blank"
