@@ -16,18 +16,13 @@ export default function Home() {
         {!isAuthenticated ? (
           <div className="mat-card mat-elevation-8 bg-white rounded-lg overflow-hidden">
             {/* Card Header with branding */}
-            <div className="px-8 pt-6 pb-4 border-b border-gray-100">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--noaa-primary)' }}>
-                  N
-                </div>
-                <div>
-                  <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
-                  <p className="text-xs text-gray-500">Test Environment</p>
-                </div>
+            <div className="px-8 pt-6 pb-4 border-b border-gray-100 text-center">
+              <div className="mb-2">
+                <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
+                <p className="text-xs text-gray-500">Test Environment</p>
               </div>
               {/* Status indicator */}
-              <div className="flex items-center gap-2 text-xs">
+              <div className="flex items-center justify-center gap-2 text-xs">
                 <div className="w-2 h-2 rounded-full bg-gray-400"></div>
                 <span className="text-gray-600">Not Authenticated</span>
               </div>
@@ -55,18 +50,13 @@ export default function Home() {
         ) : (
           <div className="mat-card mat-elevation-8 bg-white rounded-lg overflow-hidden">
             {/* Card Header with branding */}
-            <div className="px-8 pt-6 pb-4 border-b border-gray-100">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--noaa-primary)' }}>
-                  N
-                </div>
-                <div>
-                  <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
-                  <p className="text-xs text-gray-500">Test Environment</p>
-                </div>
+            <div className="px-8 pt-6 pb-4 border-b border-gray-100 text-center">
+              <div className="mb-2">
+                <h1 className="text-lg font-semibold text-gray-900">NFIG Cognito Pilot</h1>
+                <p className="text-xs text-gray-500">Test Environment</p>
               </div>
               {/* Status indicator */}
-              <div className="flex items-center gap-2 text-xs">
+              <div className="flex items-center justify-center gap-2 text-xs">
                 <div className="w-2 h-2 rounded-full bg-green-500"></div>
                 <span className="text-gray-600">Authenticated</span>
               </div>
