@@ -42,7 +42,7 @@ export default async function Home() {
 
               <a
                 href="/api/auth/signin"
-                className="mat-button mat-button-raised mat-elevation-4 flex items-center justify-center text-white font-semibold py-3 px-6 rounded-lg transition-all hover:mat-elevation-8"
+                className="mat-button mat-button-raised mat-elevation-4 w-full flex items-center justify-center text-center text-white font-semibold py-3 px-6 rounded-lg transition-all hover:mat-elevation-8"
                 style={{ backgroundColor: 'var(--noaa-primary)' }}
               >
                 Sign In with Cognito
@@ -69,8 +69,8 @@ export default async function Home() {
               <h2 className="text-xl font-semibold mb-4 text-center">Welcome back!</h2>
               <div className="mb-6 p-4 rounded-lg bg-green-50 border-l-4 border-green-500">
                 <p className="text-sm mb-1">✅ <strong>Signed in as:</strong></p>
-                <p className="font-medium">{user?.name || user?.email || 'User'}</p>
-                {user?.email && <p className="text-sm text-gray-600">{user.email}</p>}
+                <p className="font-medium break-words">{user?.name || user?.email || 'User'}</p>
+                {user?.email && <p className="text-sm text-gray-600 break-all">{user.email}</p>}
               </div>
 
               <div className="space-y-3">
