@@ -76,14 +76,14 @@ export default async function Home() {
               <div className="space-y-3">
                 <Link
                   href="/dashboard"
-                  className="mat-button mat-button-raised block text-center text-white font-semibold py-3 px-6 rounded-lg"
+                  className="mat-button mat-button-raised flex items-center justify-center text-center text-white font-semibold py-3 px-6 rounded-lg"
                   style={{ backgroundColor: 'var(--noaa-secondary)' }}
                 >
                   View Debug Dashboard
                 </Link>
                 <a
                   href="/api/auth/logout"
-                  className="mat-button block text-center bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200"
+                  className="mat-button flex items-center justify-center text-center bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200"
                 >
                   Sign Out
                 </a>
