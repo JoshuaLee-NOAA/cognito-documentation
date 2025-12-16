@@ -1,50 +1,80 @@
-# NFIG Cognito Pilot App
+# Cognito Reference Implementation
 
-⚠️ **SECURITY WARNING**: This is a test application. Never commit `.env.local` or real credentials to the repository!
+## TL;DR
 
-## Overview
+Working Next.js app demonstrating AWS Cognito integration with Login.gov for NOAA's federated identity initiative. Includes debug dashboard for token inspection, diagnostic tools for troubleshooting, and single logout implementation. **Tested Result: 100% claim passthrough** from Login.gov through Cognito to application.
 
-This is a technical Proof of Concept (PoC) application designed to test AWS Cognito as an Enterprise Authentication Proxy for NOAA's National Federated Identity Gateway (NFIG) initiative. This application will **never go into production** - it exists solely to evaluate Cognito's claim passthrough, Single Logout (SLO), and integration complexity.
+**Use this as a reference implementation for your Cognito integration.**
 
-**Built with:**
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS with Material Design principles
-- NextAuth.js v5 (beta)
-- NOAA branded color scheme
+---
 
-## Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-- AWS Cognito Client ID and Client Secret (obtain from NOAA Cognito administrator)
-
-## Environment Variables
-
-### Required Configuration
-
-Copy `.env.example` to `.env.local` and replace placeholder values with real credentials:
+## Quick Start
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Set up environment
 cp .env.example .env.local
+
+# 3. Add your credentials to .env.local
+# (Get Client ID & Secret from NOAA Cognito admin)
+
+# 4. Run the app
+npm run dev
+
+# 5. Open browser
+open http://localhost:3000
 ```
 
-### Environment Variable Mapping
+**That's it!** Click "Sign In" to test authentication.
 
-The application requires these environment variables mapped from the OIDC Discovery configuration:
+---
 
-| Environment Variable | OIDC Discovery Field | Purpose | Example Value |
-|---------------------|---------------------|---------|---------------|
-| `COGNITO_CLIENT_ID` | N/A (from AWS Console) | Application client identifier | `7a3m5k9p2c1j8h6n` |
-| `COGNITO_CLIENT_SECRET` | N/A (from AWS Console) | Application client secret | `xxxxx-xxxxx-xxxxx` |
-| `COGNITO_ISSUER` | `issuer` | Token validation | `https://cognito-idp.us-east-1.amazonaws.com/us-east-1_8KX012Qnq` |
-| `COGNITO_DOMAIN` | Derived from `authorization_endpoint` | Cognito domain | `us-east-18kx012qnq.auth.us-east-1.amazoncognito.com` |
-| `NEXTAUTH_SECRET` | N/A (generate locally) | Session encryption | Run: `openssl rand -base64 32` |
-| `NEXTAUTH_URL` | N/A (local config) | Application base URL | `http://localhost:3000` |
+## What's Included
 
-### OIDC Discovery Endpoints (Public - Safe to Share)
+### 🔐 Authentication
+- OIDC integration with AWS Cognito
+- Federation to Login.gov (SAML → OIDC conversion)
+- NextAuth.js v5 implementation
+- Single Logout (SLO) flow
 
-These endpoints are derived from the Cognito OIDC Discovery JSON and are public:
+### 🔍 Debug Dashboard (`/dashboard`)
+- View raw ID Token & Access Token
+- Inspect all claims and metadata
+- Compare token contents
+- Copy tokens for external analysis
+
+### 🛠️ Diagnostic Tools (`/test`)
+- Verify configuration
+- Test endpoint connectivity
+- Generate OAuth URLs
+- Server-side diagnostics
+- **Use this first when troubleshooting!**
+
+### 🛡️ Security Features
+- Route protection middleware
+- No secrets in code
+- Proper `.gitignore` configuration
+
+---
+
+## Environment Configuration
+
+### Required Variables
+
+Copy `.env.example` to `.env.local` and configure:
+
+| Variable | Source | Example | Notes |
+|----------|--------|---------|-------|
+| `COGNITO_CLIENT_ID` | AWS Console | `5q5mnevpmi...` | Your app client ID |
+| `COGNITO_CLIENT_SECRET` | AWS Console | `xxxxx` | Keep secret! |
+| `COGNITO_ISSUER` | OIDC Discovery | `https://cognito-idp...` | Token issuer URL |
+| `COGNITO_DOMAIN` | AWS Console | `your-domain.auth...` | Cognito hosted UI domain |
+| `NEXTAUTH_SECRET` | Generate locally | Run: `openssl rand -base64 32` | Session encryption |
+| `NEXTAUTH_URL` | Your setup | `http://localhost:3000` | App base URL |
+
+### OIDC Endpoints (Public)
 
 ```json
 {
@@ -57,47 +87,41 @@ These endpoints are derived from the Cognito OIDC Discovery JSON and are public:
 }
 ```
 
-## Getting Started
+---
 
-### 1. Install Dependencies
+## Key Learnings
 
-```bash
-npm install
-```
+### ✅ What Works Well
 
-### 2. Configure Environment Variables
+**Claim Passthrough**: 100% of Login.gov claims successfully passed through
+- ✅ `custom:ial` - Identity Assurance Level
+- ✅ `custom:aal` - Authentication Assurance Level
+- ✅ `email`, `sub`, `cognito:groups`
+- ✅ Full identity chain in `identities` claim
 
-Edit `.env.local` and add your real Cognito credentials:
+**Integration Complexity**: Minimal - standard OIDC patterns work
+- No Cognito-specific code required
+- Uses NextAuth.js standard `CognitoProvider`
+- Stack-agnostic approach
 
-```bash
-# Required: Obtain from NOAA Cognito administrator
-COGNITO_CLIENT_ID=your_real_client_id_here
-COGNITO_CLIENT_SECRET=your_real_client_secret_here
+**Single Logout**: Works as expected
+- Local session clears
+- Cognito session terminates
+- Requires manual redirect back to app
 
-# Required: Generate with: openssl rand -base64 32
-NEXTAUTH_SECRET=your_generated_secret_here
+### ⚠️ Known Issues
 
-# These values are correct for the NFIG test environment
-COGNITO_ISSUER=https://cognito-idp.us-east-1.amazonaws.com/us-east-1_8KX012Qnq
-COGNITO_DOMAIN=us-east-18kx012qnq.auth.us-east-1.amazoncognito.com
-NEXTAUTH_URL=http://localhost:3000
-```
+**Login.gov Sandbox CSP Warning**
+- **Error**: "Sending form data to SAML endpoint violates Content Security Policy"
+- **Impact**: Cosmetic only - authentication completes successfully
+- **Workaround**: Manually navigate back to app after seeing error
+- **Production**: May not occur with production Login.gov (untested)
 
-### 3. Run Development Server
+**Custom Claim Namespacing**
+- SAML attributes get `custom:` prefix (e.g., `custom:ial` not `ial`)
+- Simple string prefix handling needed in application code
 
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
-### 4. Test Authentication Flow
-
-1. Click "Sign In" on the home page
-2. You'll be redirected to Cognito Hosted UI
-3. Authenticate with your NOAA credentials
-4. After successful login, you'll be redirected back
-5. Access the Debug Dashboard to inspect tokens and claims
+---
 
 ## Project Structure
 
@@ -105,101 +129,91 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 nfig-cognito-pilot/
 ├── app/
 │   ├── api/auth/[...nextauth]/  # NextAuth configuration
-│   ├── dashboard/               # Debug dashboard (token inspection)
-│   ├── globals.css             # Material Design + NOAA styles
-│   ├── layout.tsx              # Root layout
-│   └── page.tsx                # Home page
-├── components/                  # React components
-├── lib/                        # Utility libraries
-├── types/                      # TypeScript type definitions
-├── .env.example                # Environment variable template
-├── .env.local                  # YOUR secrets (never commit!)
-└── .gitignore                  # Protects secrets
+│   ├── api/auth/logout/         # Custom SLO handler
+│   ├── api/test/cognito/        # Diagnostic API
+│   ├── dashboard/               # Token inspection UI
+│   ├── test/                    # Diagnostic page
+│   └── page.tsx                 # Home page
+├── components/                  # Reusable React components
+├── lib/                         # Auth configuration & utilities
+├── types/                       # TypeScript definitions
+├── .env.example                 # Environment template
+└── docs/                        # Additional documentation
 ```
-
-## Testing Objectives
-
-This PoC is designed to test three critical aspects:
-
-1. **Federation Test**: Can Cognito successfully redirect to upstream IDPs (Login.gov, Sso.noaa.gov)?
-2. **Claim Passthrough Test**: Does Cognito pass mapped attributes (email, groups) or strip them?
-3. **Single Logout Test**: Does SLO work effectively across the federation chain?
-
-## Debug Dashboard
-
-Access `/dashboard` (after authentication) to view:
-- Raw ID Token JSON
-- Raw Access Token JSON  
-- UserInfo endpoint claims
-- Token metadata (issuer, expiration, etc.)
-- Copy-to-clipboard functionality for analysis
-
-## Diagnostic Tools
-
-Access `/test` (no authentication required) to:
-- View all configuration parameters
-- Test individual Cognito endpoints
-- Generate and copy the exact OAuth URL
-- Run server-side diagnostics
-- Verify connectivity and configuration
-
-**Use these tools when troubleshooting authentication issues!**
-
-## Security
-
-⚠️ **Critical Security Reminders:**
-
-- **NEVER commit `.env.local`** (already in `.gitignore`)
-- **NEVER commit real credentials** to this repository
-- **NEVER share screenshots** containing real tokens
-- **Use placeholder values** in all documentation
-- **Tokens should only exist** in memory or clipboard temporarily
-
-See `SECURITY.md` in the parent directory for complete security guidelines.
-
-## Troubleshooting
-
-### "Invalid credentials" error
-- Verify `COGNITO_CLIENT_ID` and `COGNITO_CLIENT_SECRET` are correct
-- Confirm callback URL `http://localhost:3000/api/auth/callback/cognito` is registered in Cognito
-
-### "Session not persisted" error
-- Verify `NEXTAUTH_SECRET` is set and properly generated
-- Check `NEXTAUTH_URL` matches your running server URL
-
-### Authentication redirect fails
-- Ensure all OIDC Discovery endpoints are correct
-- Verify Cognito domain matches your User Pool configuration
-
-## Technology Stack
-
-- **Framework**: Next.js 14.0 with App Router
-- **Language**: TypeScript 5.x
-- **Styling**: Tailwind CSS with Material Design 3 principles
-- **Authentication**: NextAuth.js v5 (beta) with CognitoProvider
-- **UI Library**: React 19
-- **Material Design**: Custom CSS variables + Tailwind utilities
-
-## NOAA Branding
-
-The application uses official NOAA colors:
-- **Primary**: `#0050d8` (NOAA Blue)
-- **Secondary**: `#0077b6` (Ocean Blue)
-- **Accent**: `#00a6ed` (Sky Blue)
-
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [NextAuth.js Documentation](https://next-auth.js.org/)
-- [AWS Cognito Documentation](https://docs.aws.amazon.com/cognito/)
-- [Material Design 3](https://m3.material.io/)
-
-## License
-
-This project is for internal NOAA evaluation purposes only.
 
 ---
 
-**Last Updated**: December 15, 2025  
+## Troubleshooting
+
+### Authentication Fails
+
+**Check Cognito Configuration**:
+1. Visit `/test` page for diagnostics
+2. Verify all endpoints return 200 or expected responses
+3. Confirm callback URL is registered: `http://localhost:3000/api/auth/callback/cognito`
+
+**Common Issues**:
+- ❌ Hosted UI not enabled → Enable in AWS Console
+- ❌ Identity providers not assigned → Assign Login.gov to app client
+- ❌ Wrong Client ID/Secret → Verify credentials
+
+### "Invalid credentials" Error
+
+- Double-check `COGNITO_CLIENT_ID` and `COGNITO_CLIENT_SECRET`
+- Ensure no extra spaces or characters
+- Verify credentials are for correct environment
+
+### Session Not Persisting
+
+- Verify `NEXTAUTH_SECRET` is set (run `openssl rand -base64 32`)
+- Check `NEXTAUTH_URL` matches your running server
+- Clear browser cookies and try again
+
+### Can't Access Dashboard
+
+- Are you signed in? Check home page for "Authenticated" status
+- Try accessing home page first, then navigate to `/dashboard`
+- Check browser console for errors
+
+---
+
+## Security Best Practices
+
+⚠️ **NEVER commit real credentials to this repository!**
+
+- ✅ `.env.local` is in `.gitignore`
+- ✅ Use placeholder values in documentation
+- ✅ Rotate secrets if accidentally exposed
+- ✅ Use environment-specific credentials
+- ❌ Never screenshot real tokens
+
+---
+
+## Technology Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Auth**: NextAuth.js v5 (beta)
+- **Styling**: Tailwind CSS
+- **Node**: 18+
+
+---
+
+## Additional Resources
+
+- **Evaluation Report**: See `docs/EVALUATION-REPORT.md` for pilot test results
+- [Next.js Documentation](https://nextjs.org/docs)
+- [NextAuth.js Documentation](https://next-auth.js.org/)
+- [AWS Cognito Documentation](https://docs.aws.amazon.com/cognito/)
+
+---
+
+## Questions or Issues?
+
+Contact the NOAA NFIG team or refer to the evaluation report in `docs/` for detailed findings.
+
+---
+
+**Last Updated**: December 16, 2025  
 **Maintainer**: NOAA NFIG Team  
-**Status**: Development - PoC Testing Phase
+**Status**: Reference Implementation
