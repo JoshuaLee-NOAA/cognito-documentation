@@ -48,7 +48,7 @@ export default function ClaimDisplay({
   const importantClaims = claimEntries.filter(([key]) => highlightClaims.includes(key))
   const otherClaims = claimEntries.filter(([key]) => !highlightClaims.includes(key))
 
-  const renderClaimValue = (value: any): string => {
+  const renderClaimValue = (value: unknown): string => {
     if (value === null) return 'null'
     if (value === undefined) return 'undefined'
     if (typeof value === 'boolean') return value.toString()

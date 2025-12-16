@@ -44,10 +44,11 @@ export async function GET() {
     } else {
       results.tests.oidcDiscovery.error = await response.text();
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.oidcDiscovery = {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 
@@ -67,10 +68,11 @@ export async function GET() {
     } else {
       results.tests.jwks.error = await response.text();
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.jwks = {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 
@@ -86,10 +88,11 @@ export async function GET() {
       success: response.status < 500, // Any response < 500 means endpoint exists
       note: "HEAD request - any non-5xx response means endpoint is reachable",
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.authorizationEndpoint = {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 
@@ -105,10 +108,11 @@ export async function GET() {
       success: response.status < 500,
       note: "OPTIONS request - testing endpoint availability",
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.tokenEndpoint = {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 
@@ -123,10 +127,11 @@ export async function GET() {
       success: true, // If we get any response, domain is reachable
       note: "Testing if Cognito domain responds",
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.domainReachability = {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 
