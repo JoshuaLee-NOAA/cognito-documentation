@@ -42,7 +42,7 @@ export default function CopyButton({ text, label = 'Copy', className = '' }: Cop
   return (
     <button
       onClick={handleCopy}
-      className={`mat-button mat-button-raised mat-elevation-2 px-4 py-2 rounded transition-all hover:mat-elevation-4 ${className}`}
+      className={`mat-button mat-button-raised mat-elevation-2 flex items-center justify-center px-4 py-2 rounded transition-all hover:mat-elevation-4 ${className}`}
       style={{
         backgroundColor: copied ? '#4caf50' : error ? '#f44336' : 'var(--noaa-primary)',
         color: 'white'
