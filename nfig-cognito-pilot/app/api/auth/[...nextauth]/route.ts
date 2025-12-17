@@ -125,14 +125,6 @@ export const authOptions: NextAuthConfig = {
   },
   
   /**
-   * Custom Pages
-   * Use our branded home page instead of NextAuth's default UI
-   */
-  pages: {
-    signIn: '/',  // Use custom home page for sign-in
-  },
-  
-  /**
    * Enable debug mode in development
    */
   debug: process.env.NODE_ENV === "development",
