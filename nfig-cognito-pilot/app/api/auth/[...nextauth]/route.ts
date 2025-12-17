@@ -55,7 +55,6 @@ export const authOptions: NextAuthConfig = {
           id: profile.sub,
           name: profile.name || profile.email,
           email: profile.email,
-          image: profile.picture,
         }
       },
     },
