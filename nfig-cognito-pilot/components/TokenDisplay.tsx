@@ -43,44 +43,20 @@ export default function TokenDisplay({ token, claims, title, source }: TokenDisp
     <div className="mat-card mat-elevation-4 bg-white rounded-lg overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1 hover:bg-gray-100 rounded transition-colors"
-            title={isExpanded ? 'Collapse' : 'Expand'}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="p-1 hover:bg-gray-100 rounded transition-colors"
+          title={isExpanded ? 'Collapse' : 'Expand'}
+        >
+          <svg 
+            className={`w-5 h-5 text-gray-600 transition-transform ${isExpanded ? 'rotate-90' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
           >
-            <svg 
-              className={`w-5 h-5 text-gray-600 transition-transform ${isExpanded ? 'rotate-90' : ''}`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          
-          <div>
-            <div className="flex items-center gap-2">
-              <div 
-                className="px-3 py-1 rounded-full text-xs font-semibold"
-                style={{ 
-                  backgroundColor: source === 'ID Token' ? '#e3f2fd' : 
-                                 source === 'Access Token' ? '#f3e5f5' : '#e8f5e9',
-                  color: source === 'ID Token' ? 'var(--noaa-primary)' : 
-                         source === 'Access Token' ? 'var(--noaa-secondary)' : 'var(--noaa-accent)'
-                }}
-              >
-                {source}
-              </div>
-              <h3 className="mat-h6" style={{ color: 'var(--noaa-primary)' }}>
-                {title}
-              </h3>
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              {claims ? `${Object.keys(claims).length} claims` : 'Raw JSON'}
-            </p>
-          </div>
-        </div>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
 
         <div className="flex items-center gap-2">
           {token && <CopyButton text={token} label="Token" />}
