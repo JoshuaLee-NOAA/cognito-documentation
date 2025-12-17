@@ -65,13 +65,13 @@ export default async function DashboardPage() {
               </div>
               <Link
                 href="/"
-                className="mat-button px-4 py-2 rounded text-sm font-semibold transition-colors"
+                className="mat-button flex items-center justify-center px-4 py-2 rounded text-sm font-semibold transition-colors"
                 style={{ 
                   backgroundColor: 'var(--noaa-secondary)',
                   color: 'white'
                 }}
               >
-                ← Back to Home
+                Home
               </Link>
             </div>
           </div>
