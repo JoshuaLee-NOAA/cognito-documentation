@@ -41,7 +41,7 @@ export default async function Home() {
               <p className="text-sm text-gray-600 mb-6">Authenticate with NOAA credentials via Cognito</p>
 
               <a
-                href="/api/auth/signin/cognito"
+                href="/api/auth/signin"
                 className="mat-button mat-button-raised mat-elevation-4 w-full flex items-center justify-center text-center text-white font-semibold py-3 px-6 rounded-lg transition-all hover:mat-elevation-8"
                 style={{ backgroundColor: 'var(--noaa-primary)' }}
               >
