@@ -14,7 +14,7 @@ See **[SECURITY.md](SECURITY.md)** for complete security guidelines.
 
 ## TL;DR
 
-Working Next.js reference implementation demonstrating AWS Cognito integration with Login.gov for NOAA's federated identity initiative. **Tested Result: 100% claim passthrough** from Login.gov through Cognito to application. Includes debug dashboard, diagnostic tools, and Single Logout (SLO) implementation.
+Working Next.js reference implementation demonstrating AWS Cognito integration with Login.gov for NOAA's federated identity initiative. Includes debug dashboard, diagnostic tools, and Single Logout (SLO) implementation.
 
 **Browse this code as a reference when building your own Cognito integration.**
 
